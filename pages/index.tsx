@@ -15,7 +15,10 @@ const Home: NextPage = () => {
   };
 
   const setCookieHandler = () => {
-    setCookie('new-user', 'true', { path: '/' });
+    setCookie('new-user', 'true', {
+      path: '/',
+      // expires: new Date(Date.now() + 10000),
+    });
   };
 
   return (
