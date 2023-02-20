@@ -42,7 +42,7 @@
 .title {
   margin: 0;
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 2rem;
 }
 
 .title,
@@ -101,6 +101,45 @@
   margin: 0;
   font-size: 1.25rem;
   line-height: 1.5;
+}
+
+.button {
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  border: 1px solid #f0f4f9;
+  border-radius: 5px;
+  color: #c7d3e1;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.button:hover,
+.button:focus,
+.button:active {
+  background: #f3f4f5;
+  color: #000000;
+  cursor: pointer;
+}
+
+.resetbutton {
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  border: 1px solid #f0f4f9;
+  border-radius: 5px;
+  color: #c7d3e1;
+  background: #bc1900;
+  transition: all 0.2s ease;
+  font-weight: 900;
+}
+
+.resetbutton:hover,
+.resetbutton:focus,
+.resetbutton:active {
+  background: #f3f4f5;
+  color: #000000;
+  cursor: pointer;
 }
 
 .logo {
