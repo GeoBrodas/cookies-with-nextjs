@@ -142,6 +142,63 @@
   cursor: pointer;
 }
 
+.verifybutton {
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  border: 1px solid #f0f4f9;
+  border-radius: 5px;
+  color: #c7d3e1;
+  background: #00bc19;
+  transition: all 0.2s ease;
+  font-weight: 900;
+}
+
+.verifybutton:hover,
+.verifybutton:focus,
+.verifybutton:active {
+  background: #f3f4f5;
+  color: #000000;
+  cursor: pointer;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.dashboard h2 {
+  margin: 0 0 1rem 0;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+@keyframes borderFlash {
+  0% {
+    border-color: yellow;
+  }
+  100% {
+    border-color: #000000;
+  }
+}
+
+.dashboard p {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  font-weight: 900;
+  color: yellow;
+
+  border: 1px solid #000000;
+  padding: 2rem;
+
+  /* flashing border animation */
+  animation: 0.5s linear infinite alternate both running borderFlash;
+}
+
 .logo {
   height: 1em;
   margin-left: 0.5rem;

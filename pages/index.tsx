@@ -1,24 +1,63 @@
+import { setCookie, deleteCookie, getCookie } from 'cookies-next';
 import type { NextPage } from 'next';
-import { useEffect } from 'react';
-import useCookies from 'react-cookie/cjs/useCookies';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(['new-user']);
+  const [isAuthorized, setAuthorization] = useState(false);
+  const [launchCode, setLaunchCode] = useState('');
+  const router = useRouter();
 
-  useEffect(() => {
-    console.log('Cookies: ', cookies);
-  }, [cookies]);
+  const getCode = async () => {
+    const response = await fetch('/api/verify-otp', {
+      method: 'POST',
+      body: JSON.stringify({ name: 'McKenzie' }),
+    });
 
-  const removeCookieHandler = () => {
-    removeCookie('new-user');
+    const data = await response.json();
+
+    if (data.authorize) {
+      setAuthorization(true);
+      setLaunchCode(data.code);
+    }
   };
 
-  const setCookieHandler = () => {
-    setCookie('new-user', 'true', {
+  useEffect(() => {
+    getCode();
+  }, []);
+
+  const addCookie = () => {
+    setCookie('user', true, {
       path: '/',
-      // expires: new Date(Date.now() + 10000),
     });
+
+    router.replace('/');
+  };
+
+  const removeCookie = () => {
+    deleteCookie('user', {
+      path: '/',
+    });
+
+    router.replace('/');
+  };
+
+  const verifyOTP = async (name: string) => {
+    const response = await fetch('/api/verify-otp', {
+      method: 'POST',
+      body: JSON.stringify({ name }),
+    });
+
+    const data = await response.json();
+
+    if (data.authorize) {
+      setAuthorization(true);
+      setLaunchCode(data.code);
+    } else {
+      setAuthorization(false);
+      alert('Invalid OTP');
+    }
   };
 
   return (
@@ -26,16 +65,33 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <h2 className={styles.title}>Cookie tutorial</h2>
 
-        {!cookies['new-user'] && (
-          <button onClick={setCookieHandler} className={styles.button}>
+        {!getCookie('user') && (
+          <button onClick={addCookie} className={styles.button}>
             Complete new user registration!
           </button>
         )}
 
-        {cookies['new-user'] && (
-          <button onClick={removeCookieHandler} className={styles.resetbutton}>
-            Reset new user registration
-          </button>
+        {getCookie('user') && (
+          <div className={styles.dashboard}>
+            {!isAuthorized ? (
+              <button
+                onClick={() => verifyOTP('McKenzie')}
+                className={styles.verifybutton}
+              >
+                Verify OTP
+              </button>
+            ) : (
+              <div>
+                <h2>Welcome Mr.President</h2>
+                <h4>Launch Code</h4>
+                <p>{launchCode}</p>
+              </div>
+            )}
+
+            <button onClick={removeCookie} className={styles.resetbutton}>
+              Reset new user registration
+            </button>
+          </div>
         )}
       </main>
     </div>
